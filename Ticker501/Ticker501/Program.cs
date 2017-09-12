@@ -9,12 +9,25 @@ namespace Ticker501
 {
     class Program
     {
-        private List<Stock> db = new List<Stock>();
+        public static List<Stock> db;
         private static double _feePerTrade = 9.99;
         private static double _feePerTransfer = 4.99;
         static void Main(string[] args)
         {
-            string[] = 
+            db = new List<Stock>();
+
+
+            StreamReader tick = new StreamReader("ticker.txt");
+            string cur = tick.ReadLine();
+            while(cur != "")
+            {
+                string[] split = cur.Split('-');
+                Stock s = new Stock(split[0], split[1], 0, Convert.ToDouble(split[2].Substring(1)));
+                db.Add(s);
+                
+                cur = tick.ReadLine();
+            }
+            Console.ReadLine();
         }
 
     }

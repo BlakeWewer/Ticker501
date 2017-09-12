@@ -141,6 +141,7 @@ namespace Ticker501
 
         void buyStock(string ticker)
         {
+            /*
             bool processed = false;
             while(!processed)
             {
@@ -186,6 +187,7 @@ namespace Ticker501
                 //************************************************************************************************************************************************************************
                 //************************************************************************************************************************************************************************
             }
+            */
         }
 
         void sellStock(string ticker)
@@ -204,7 +206,7 @@ namespace Ticker501
             int portfolio = Convert.ToInt32(Console.ReadLine());
             */
             //************************************************************************************************************************************************************************
-            Console.WriteLine("You currently have " + s.Stocks + " " + s.Ticker + " stocks bought for " + s.Price + ".  \nHow many would you like to sell for ");
+//            Console.WriteLine("You currently have " + s.Stocks + " " + s.Ticker + " stocks bought for " + s.Price + ".  \nHow many would you like to sell for ");
             //************************************************************************************************************************************************************************
         }
 
