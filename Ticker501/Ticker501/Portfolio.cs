@@ -101,6 +101,7 @@ namespace Ticker501
 
         public void buyStock(string ticker, double curBalance)
         {
+            StreamWriter s = new StreamWriter("TransactionHistory.txt");
             List<Stock> db = new List<Stock>();
             Stock toAdd = new Stock();
             StreamReader tick = new StreamReader("ticker.txt");
