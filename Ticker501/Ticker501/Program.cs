@@ -14,8 +14,7 @@ namespace Ticker501
         private static double _feePerTransfer = 4.99;
         static void Main(string[] args)
         {
-            db = new List<Stock>();
-
+            List<Stock> db = new List<Stock>();
 
             StreamReader tick = new StreamReader("ticker.txt");
             string cur = tick.ReadLine();

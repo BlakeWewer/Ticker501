@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Ticker501
 {
@@ -85,12 +86,62 @@ namespace Ticker501
             }
         }
 
-        public void buyStock(string ticker)
+        public void buyStock(string ticker, double curBalance)
         {
+            List<Stock> db = new List<Stock>();
+            Stock toAdd = new Stock();
+            StreamReader tick = new StreamReader("ticker.txt");
+            string cur = tick.ReadLine();
+            while (cur != "")
+            {
+                string[] split = cur.Split('-');
+                Stock s = new Stock(split[0], split[1], 50, Convert.ToDouble(split[2].Substring(1)));
+                db.Add(s);
 
-            //************************************************************************************************************************************************************************
-//            Stocks.Add(s);
-            //************************************************************************************************************************************************************************
+                cur = tick.ReadLine();
+            }
+
+            foreach(Stock h in db)
+            {
+                if(h.Ticker.Equals(ticker))
+                {
+                    Console.WriteLine("Current Price for " + ticker + ":");
+                    Console.WriteLine(h.ToString());
+                    toAdd.Company = h.Company;
+                    toAdd.Ticker = h.Ticker;
+                    toAdd.Price = h.Price;
+                }
+            }
+            Console.Write("Would you like to purchase a specific number of stocks [1] or enter a dollar amount to purchase stock [2] ?: ");
+            int type = Convert.ToInt32(Console.ReadLine());
+            if(type == 1)
+            {
+                bool complete = false;
+                int numStocks = 0;
+                while (!complete)
+                {
+                    Console.Write("Enter the number of stocks you wish to purchase: ");
+                    try
+                    {
+                        numStocks = Convert.ToInt32(Console.ReadLine());
+                    }catch(Exception e)
+                    {
+                        Console.WriteLine("Please enter a valid integer value.");
+                        continue;
+                    }
+                    toAdd.Stocks = numStocks;
+                    complete = true;
+                }
+                if(numStocks * toAdd.Price + _feePerTrade < curBalance)
+                {
+                    _stocks.Add(toAdd);
+                }else
+                {
+                    Console.WriteLine("Insufficient Funds to buy this quantity of stock.");
+                }
+                
+
+            }
         }
 
         public void sellStock(string ticker)

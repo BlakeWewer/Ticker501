@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Ticker501
 {
@@ -80,6 +81,11 @@ namespace Ticker501
             {
                 _price = value;
             }
+        }
+
+        public override string ToString()
+        {
+            return (_ticker + " - " + _company + " - Price: " + _price + " - Stocks: " + _stocks);
         }
     }
 }

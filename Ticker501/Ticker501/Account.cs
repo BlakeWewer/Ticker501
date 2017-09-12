@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Ticker501
 {
     class Account
     {
         private Portfolio[] _portfolios;
-        private double _balance, _gains, _losses;
+        private double _balance, _stocks, _gains, _losses;
         private static double _feePerTrade = 9.99;
         private static double _feePerTransfer = 4.99;
 
@@ -117,6 +118,19 @@ namespace Ticker501
             }
         }
 
+        public double Stocks
+        {
+            get
+            {
+                return _stocks;
+            }
+
+            set
+            {
+                _stocks = value;
+            }
+        }
+
         void addPortfolio(Portfolio p)
         {
             Portfolio[] cur = new Portfolio[3];
@@ -128,7 +142,7 @@ namespace Ticker501
                 if(i > 2)
                 {
                     Console.WriteLine("Cannot add another portfolio, maximum of 3.");
-                    break;
+                    continue;
                 }
             }
             cur[i] = p;
@@ -141,7 +155,7 @@ namespace Ticker501
 
         void buyStock(string ticker)
         {
-            /*
+            Portfolio cur = new Portfolio();
             bool processed = false;
             while(!processed)
             {
@@ -177,7 +191,7 @@ namespace Ticker501
                 //************************************************************************************************************************************************************************
                 if (portfolio > 0 && portfolio < max)
                 {
-                    _portfolios[portfolio].buyStock(s);
+                    cur = _portfolios[portfolio];
                     processed = true;
                 }  
                 else
@@ -187,7 +201,9 @@ namespace Ticker501
                 //************************************************************************************************************************************************************************
                 //************************************************************************************************************************************************************************
             }
-            */
+
+            cur.buyStock(ticker);
+
         }
 
         void sellStock(string ticker)
