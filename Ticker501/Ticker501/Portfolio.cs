@@ -101,7 +101,6 @@ namespace Ticker501
 
         public void buyStock(string ticker, double curBalance)
         {
-            StreamWriter s = new StreamWriter("TransactionHistory.txt");
             List<Stock> db = new List<Stock>();
             Stock toAdd = new Stock();
             StreamReader tick = new StreamReader("ticker.txt");
@@ -126,6 +125,7 @@ namespace Ticker501
                     toAdd.Price = h.Price;
                 }
             }
+            tick.Close();
             Console.Write("Would you like to purchase a specific number of stocks [1] or enter a dollar amount to purchase stock [2] ?: ");
             int type = Convert.ToInt32(Console.ReadLine());
             if(type == 1)
@@ -201,7 +201,7 @@ namespace Ticker501
 
                 curS = tick.ReadLine();
             }
-
+            tick.Close();
             int index = -1;
             for(int i = 0; i < this.Stocks.Count; i++)
             {

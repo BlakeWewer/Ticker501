@@ -94,6 +94,12 @@ namespace Ticker501
         {
             get
             {
+                double sum = 0;
+                foreach(Portfolio h in _portfolios)
+                {
+                    sum += h.Gains;
+                }
+                _gains = sum;
                 return _gains;
             }
             set
@@ -110,6 +116,12 @@ namespace Ticker501
         {
             get
             {
+                double sum = 0;
+                foreach (Portfolio h in _portfolios)
+                {
+                    sum += h.Losses;
+                }
+                _losses = sum;
                 return _losses;
             }
             set
@@ -131,7 +143,7 @@ namespace Ticker501
             }
         }
 
-        void addPortfolio(Portfolio p)
+        public void addPortfolio(Portfolio p)
         {
             Portfolio[] cur = new Portfolio[3];
             bool add = true;
@@ -155,7 +167,7 @@ namespace Ticker501
             }
         }
 
-        void deletePortfolio()
+        public void deletePortfolio()
         {
             Portfolio cur = new Portfolio();
             bool found = false;
@@ -216,7 +228,7 @@ namespace Ticker501
             }
         }
 
-        void buyStock(string ticker)
+        public void buyStock(string ticker)
         {
             Portfolio cur = new Portfolio();
             bool processed = false;
@@ -269,7 +281,7 @@ namespace Ticker501
             _losses += _feePerTrade;
         }
 
-        void sellStock(string ticker)
+        public void sellStock(string ticker)
         {
             Console.WriteLine("Please select which portfolio to sell stock from...");
             if (_portfolios[0] != null)
@@ -290,13 +302,13 @@ namespace Ticker501
 
         }
 
-        void addFunds(double amount)
+        public void addFunds(double amount)
         {
             Balance += (amount - _feePerTransfer);
             Losses += _feePerTransfer;
         }
 
-        void withdrawFunds(double amount)
+        public void withdrawFunds(double amount)
         {
             int max = 0;
             if (_portfolios[0] != null)
@@ -326,7 +338,7 @@ namespace Ticker501
             }
         }
 
-        void portfolioBalancePrintOut(Portfolio p)
+        public void portfolioBalancePrintOut(Portfolio p)
         {
             String cur = String.Format("{0:C2}",(p.stocksSum() * 100 / _stocks));
             Console.WriteLine("\n\n" + p.Name + " Portfolio:\n");
