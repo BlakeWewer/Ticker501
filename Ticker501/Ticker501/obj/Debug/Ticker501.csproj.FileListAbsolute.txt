@@ -1,0 +1,2 @@
+h:\visual studio 2015\Projects\Ticker501\Ticker501\bin\Debug\Ticker501.exe.config
+C:\Users\bewewer\Source\Repos\Ticker501\Ticker501\Ticker501\bin\Debug\Ticker501.exe.config
