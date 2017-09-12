@@ -86,6 +86,19 @@ namespace Ticker501
             }
         }
 
+        public int TStocks
+        {
+            get
+            {
+                return _tStocks;
+            }
+
+            set
+            {
+                _tStocks = value;
+            }
+        }
+
         public void buyStock(string ticker, double curBalance)
         {
             List<Stock> db = new List<Stock>();
@@ -124,28 +137,70 @@ namespace Ticker501
                     try
                     {
                         numStocks = Convert.ToInt32(Console.ReadLine());
-                    }catch(Exception e)
+                    }
+                    catch (Exception e)
                     {
                         Console.WriteLine("Please enter a valid integer value.");
                         continue;
                     }
                     toAdd.Stocks = numStocks;
-                    complete = true;
-                }
-                if(numStocks * toAdd.Price + _feePerTrade < curBalance)
-                {
-                    _stocks.Add(toAdd);
-                }else
-                {
-                    Console.WriteLine("Insufficient Funds to buy this quantity of stock.");
-                }
-                
 
+                    if (numStocks * toAdd.Price + _feePerTrade < curBalance)
+                    {
+                        _stocks.Add(toAdd);
+                        complete = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Insufficient Funds to buy this quantity of stock.");
+                    }
+                }
+            }else if(type == 2)
+            {
+                bool complete = false;
+                double amount = 0;
+                while (!complete)
+                {
+                    Console.Write("Enter the dollar amount to purchase stock: ");
+                    try
+                    {
+                        amount = Convert.ToDouble(Console.ReadLine());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Please enter a valid integer value.");
+                        continue;
+                    }
+                    toAdd.Stocks = (int)(amount / toAdd.Price);
+
+                    if (amount + _feePerTrade < curBalance)
+                    {
+                        _stocks.Add(toAdd);
+                        complete = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Insufficient Funds to buy this quantity of stock.");
+                    }
+                }
             }
         }
 
-        public void sellStock(string ticker)
+        public double sellStock(string ticker)
         {
+            List<Stock> db = new List<Stock>();
+            Stock toAdd = new Stock();
+            StreamReader tick = new StreamReader("ticker.txt");
+            string curS = tick.ReadLine();
+            while (curS != "")
+            {
+                string[] split = curS.Split('-');
+                Stock s = new Stock(split[0], split[1], 50, Convert.ToDouble(split[2].Substring(1)));
+                db.Add(s);
+
+                curS = tick.ReadLine();
+            }
+
             int index = -1;
             for(int i = 0; i < this.Stocks.Count; i++)
             {
@@ -155,14 +210,40 @@ namespace Ticker501
                     break;
                 }
             }
-
-            Stock s = Stocks[index];
-
-
-            //Get Current Value of the stock
-            //************************************************************************************************************************************************************************
-            Console.WriteLine("You currently have " + s.Stocks + " " + s.Ticker + " stocks bought for " + s.Price + ".  \nHow many would you like to sell for ");
-            //************************************************************************************************************************************************************************
+            Stock cur = Stocks[index];
+            double sellPrice = 0;
+            foreach (Stock h in db)
+            {
+                if (h.Ticker.Equals(ticker))
+                {
+                    Console.WriteLine("Selling Price for " + ticker + ":");
+                    Console.WriteLine(h.Price);
+                    sellPrice = h.Price;
+                }
+                break;
+            }
+            Console.WriteLine("You currently have " + cur.Stocks + " " + cur.Ticker + " stocks bought for " + cur.Price + ".  \nHow many would you like to sell for " + sellPrice + "?: ");
+            int nStocks = Convert.ToInt32(Console.ReadLine());
+            while(nStocks > cur.Stocks)
+            {
+                Console.WriteLine("You don't have that many stocks to sell.  Please enter a valid number.");
+                Console.WriteLine("You currently have " + cur.Stocks + " " + cur.Ticker + " stocks bought for " + cur.Price + ".  \nHow many would you like to sell for " + sellPrice + "?: ");
+                nStocks = Convert.ToInt32(Console.ReadLine());
+            }
+            double gain = (nStocks * sellPrice - nStocks * cur.Price) - 2 * _feePerTrade;
+            double value = nStocks * sellPrice - _feePerTrade;
+            cur.Stocks -= nStocks;
+            if(cur.Stocks == 0)
+            {
+                Stocks[index] = null;
+                for(int i = 0; i < Stocks.Count - 1; i++)
+                {
+                    Stocks[i] = Stocks[i + 1];
+                }
+            }
+            _gains += gain;
+            _losses += _feePerTrade;
+            return value;
         }
 
         public void portfolioPrintOut()
@@ -174,6 +255,19 @@ namespace Ticker501
                 Console.WriteLine(cur);
                 cur = "";
             }
+
+            Console.WriteLine("Gains: " + _gains);
+            Console.WriteLine("Losses: " + _losses);
+        }
+
+        public double stocksSum()
+        {
+            double sum = 0;
+            foreach(Stock h in _stocks)
+            {
+                sum += (h.Stocks * h.Price);
+            }
+            return sum;
         }
     }
 }

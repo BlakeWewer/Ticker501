@@ -134,6 +134,7 @@ namespace Ticker501
         void addPortfolio(Portfolio p)
         {
             Portfolio[] cur = new Portfolio[3];
+            bool add = true;
             this.Portfolios.CopyTo(cur, 0);
             int i = 0;
             while(cur[i] != null)
@@ -142,30 +143,32 @@ namespace Ticker501
                 if(i > 2)
                 {
                     Console.WriteLine("Cannot add another portfolio, maximum of 3.");
-                    continue;
+                    add = false;
+                    break;
                 }
             }
-            cur[i] = p;
+            if(add)
+                cur[i] = p;
+            else
+            {
+                Console.WriteLine("Could not add portfolio.");
+            }
         }
 
-        void deletePortfolio(Portfolio p)
-        {
-
-        }
-
-        void buyStock(string ticker)
+        void deletePortfolio()
         {
             Portfolio cur = new Portfolio();
-            bool processed = false;
-            while(!processed)
+            bool found = false;
+            int portfolio = -1;
+            while (!found)
             {
-                int portfolio = -1, max = 0;
-                Console.WriteLine("Please select which portfolio to add this stock to...");
+                int max = 0;
+                Console.WriteLine("Please select which portfolio to delete...");
                 if (_portfolios[0] != null)
                 {
                     Console.Write("Enter '0' for Portfolio " + _portfolios[0].Name + "\t");
                     max = 1;
-                } 
+                }
                 if (_portfolios[1] != null)
                 {
                     Console.Write("Enter '1' for Portfolio " + _portfolios[1].Name + "\t");
@@ -187,28 +190,87 @@ namespace Ticker501
                 {
                     Console.WriteLine("Value must be a valid integer from the list above.");
                 }
-                //************************************************************************************************************************************************************************
-                //************************************************************************************************************************************************************************
                 if (portfolio > 0 && portfolio < max)
                 {
                     cur = _portfolios[portfolio];
-                    processed = true;
-                }  
+                    found = true;
+                }
                 else
                 {
                     throw new Exception("Integer must be within the valid range from above.");
                 }
-                //************************************************************************************************************************************************************************
-                //************************************************************************************************************************************************************************
+            }
+            foreach(Stock h in cur.Stocks)
+            {
+                _gains += cur.Gains;
+                _losses += cur.Losses;
+                double sellReturn = cur.sellStock(h.Ticker);
+                _stocks -= sellReturn;
+                _balance += sellReturn;
+            }
+            _portfolios[portfolio] = null;
+
+            for (int i = 0; i < _portfolios.Count() - 1; i++)
+            {
+                _portfolios[i] = _portfolios[i + 1];
+            }
+        }
+
+        void buyStock(string ticker)
+        {
+            Portfolio cur = new Portfolio();
+            bool processed = false;
+            while (!processed)
+            {
+                int portfolio = -1, max = 0;
+                Console.WriteLine("Please select which portfolio to add this stock to...");
+                if (_portfolios[0] != null)
+                {
+                    Console.Write("Enter '0' for Portfolio " + _portfolios[0].Name + "\t");
+                    max = 1;
+                }
+                if (_portfolios[1] != null)
+                {
+                    Console.Write("Enter '1' for Portfolio " + _portfolios[1].Name + "\t");
+                    max = 2;
+                }
+                if (_portfolios[2] != null)
+                {
+                    Console.Write("Enter '2' for Portfolio " + _portfolios[2].Name + "\t");
+                    max = 3;
+                }
+                Console.WriteLine();
+
+                Console.Write("Enter Portfolio: ");
+                try
+                {
+                    portfolio = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Value must be a valid integer from the list above.");
+                }
+                if (portfolio > 0 && portfolio < max)
+                {
+                    cur = _portfolios[portfolio];
+                    processed = true;
+                }
+                else
+                {
+                    throw new Exception("Integer must be within the valid range from above.");
+                }
             }
 
-            cur.buyStock(ticker);
+            cur.buyStock(ticker, _balance);
 
+            double transactionAmount = cur.Stocks[cur.Stocks.Count - 1].Price * cur.Stocks[cur.Stocks.Count - 1].Stocks;
+            _balance -= transactionAmount + _feePerTrade;
+            _stocks += transactionAmount;
+            _losses += _feePerTrade;
         }
 
         void sellStock(string ticker)
         {
-            /*
             Console.WriteLine("Please select which portfolio to sell stock from...");
             if (_portfolios[0] != null)
                 Console.Write("Enter '0' for Portfolio " + _portfolios[0].Name + "\t");
@@ -220,10 +282,12 @@ namespace Ticker501
             
             Console.Write("Enter Portfolio: ");
             int portfolio = Convert.ToInt32(Console.ReadLine());
-            */
-            //************************************************************************************************************************************************************************
-//            Console.WriteLine("You currently have " + s.Stocks + " " + s.Ticker + " stocks bought for " + s.Price + ".  \nHow many would you like to sell for ");
-            //************************************************************************************************************************************************************************
+
+            Portfolio cur = _portfolios[portfolio];
+            double sellReturn = cur.sellStock(ticker);
+            _stocks -= sellReturn;
+            _balance += sellReturn;
+
         }
 
         void addFunds(double amount)
@@ -257,20 +321,21 @@ namespace Ticker501
                 cur.portfolioPrintOut();
                 Console.Write("Enter the Ticker for the stock you wish to sell from " + cur.Name + ": ");
                 cur.sellStock(Console.ReadLine());
-
-                //*******************************************************
-                //*******************************************************
-                //*******************************************************
-                //*******************************************************
-                //*******************************************************
-                //*******************************************************
-                //*******************************************************
-                //*******************************************************
-                //*******************************************************
-                //*******************************************************
                 Balance -= (amount + _feePerTransfer);
                 Losses += _feePerTransfer;
             }
+        }
+
+        void portfolioBalancePrintOut(Portfolio p)
+        {
+            String cur = String.Format("{0:C2}",(p.stocksSum() * 100 / _stocks));
+            Console.WriteLine("\n\n" + p.Name + " Portfolio:\n");
+            Console.WriteLine("Total Investment: $" + p.stocksSum());
+            Console.WriteLine("Percentage of Account: " + cur + "%");
+            Console.WriteLine();
+
+            Console.WriteLine("Stock Breakdown:");
+            p.portfolioPrintOut();
         }
     }
 }
