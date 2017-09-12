@@ -139,7 +139,7 @@ namespace Ticker501
 
         }
 
-        void buyStock(Stock s)
+        void buyStock(string ticker)
         {
             bool processed = false;
             while(!processed)
@@ -147,14 +147,20 @@ namespace Ticker501
                 int portfolio = -1, max = 0;
                 Console.WriteLine("Please select which portfolio to add this stock to...");
                 if (_portfolios[0] != null)
+                {
                     Console.Write("Enter '0' for Portfolio " + _portfolios[0].Name + "\t");
-                max = 1;
+                    max = 1;
+                } 
                 if (_portfolios[1] != null)
+                {
                     Console.Write("Enter '1' for Portfolio " + _portfolios[1].Name + "\t");
-                max = 2;
+                    max = 2;
+                }
                 if (_portfolios[2] != null)
+                {
                     Console.Write("Enter '2' for Portfolio " + _portfolios[2].Name + "\t");
-                max = 3;
+                    max = 3;
+                }
                 Console.WriteLine();
 
                 Console.Write("Enter Portfolio: ");
@@ -166,7 +172,8 @@ namespace Ticker501
                 {
                     Console.WriteLine("Value must be a valid integer from the list above.");
                 }
-
+                //************************************************************************************************************************************************************************
+                //************************************************************************************************************************************************************************
                 if (portfolio > 0 && portfolio < max)
                 {
                     _portfolios[portfolio].buyStock(s);
@@ -176,10 +183,12 @@ namespace Ticker501
                 {
                     throw new Exception("Integer must be within the valid range from above.");
                 }
+                //************************************************************************************************************************************************************************
+                //************************************************************************************************************************************************************************
             }
         }
 
-        void sellStock(Stock s)
+        void sellStock(string ticker)
         {
             /*
             Console.WriteLine("Please select which portfolio to sell stock from...");
@@ -207,13 +216,30 @@ namespace Ticker501
 
         void withdrawFunds(double amount)
         {
-            if (amount > Balance)
+            int max = 0;
+            if (_portfolios[0] != null)
+                max = 1;
+            if (_portfolios[1] != null)
+                max = 2;
+            if (_portfolios[2] != null)
+                max = 3;
+
+            while (amount + _feePerTransfer > Balance)
             {
                 Console.WriteLine("Withdrawal amount is greater than cash value in available balance.  \nWhich stocks would you like to sell in order to fulfill the withdraw transaction?");
-                foreach(Portfolio h in _portfolios)
+                for(int i = 0; i < max; i++)
                 {
-
+                    Console.WriteLine("Portfolio " + i + ":");
+                    _portfolios[i].portfolioPrintOut();
                 }
+                Console.Write("Enter portfolio number from the list above: ");
+                int port = Convert.ToInt32(Console.ReadLine());
+
+                Portfolio cur = _portfolios[port];
+                cur.portfolioPrintOut();
+                Console.Write("Enter the Ticker for the stock you wish to sell from " + cur.Name + ": ");
+                cur.sellStock(Console.ReadLine());
+
                 //*******************************************************
                 //*******************************************************
                 //*******************************************************
@@ -224,6 +250,8 @@ namespace Ticker501
                 //*******************************************************
                 //*******************************************************
                 //*******************************************************
+                Balance -= (amount + _feePerTransfer);
+                Losses += _feePerTransfer;
             }
         }
     }

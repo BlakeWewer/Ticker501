@@ -85,26 +85,29 @@ namespace Ticker501
             }
         }
 
-        public void buyStock(Stock s)
+        public void buyStock(string ticker)
         {
+            //************************************************************************************************************************************************************************
             Stocks.Add(s);
+            //************************************************************************************************************************************************************************
         }
 
-        public void sellStock(Stock s)
+        public void sellStock(string ticker)
         {
-            /*
-            Console.WriteLine("Please select which portfolio to sell stock from...");
-            if (_portfolios[0] != null)
-                Console.Write("Enter '0' for Portfolio " + _portfolios[0].Name + "\t");
-            if (_portfolios[1] != null)
-                Console.Write("Enter '1' for Portfolio " + _portfolios[1].Name + "\t");
-            if (_portfolios[2] != null)
-                Console.Write("Enter '2' for Portfolio " + _portfolios[2].Name + "\t");
-            Console.WriteLine();
-            
-            Console.Write("Enter Portfolio: ");
-            int portfolio = Convert.ToInt32(Console.ReadLine());
-            */
+            int index = -1;
+            for(int i = 0; i < this.Stocks.Count; i++)
+            {
+                if(ticker.Equals(Stocks[i].Ticker))
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            Stock s = Stocks[index];
+
+
+            //Get Current Value of the stock
             //************************************************************************************************************************************************************************
             Console.WriteLine("You currently have " + s.Stocks + " " + s.Ticker + " stocks bought for " + s.Price + ".  \nHow many would you like to sell for ");
             //************************************************************************************************************************************************************************
@@ -112,7 +115,7 @@ namespace Ticker501
 
         public void portfolioPrintOut()
         {
-            Console.WriteLine("\n\nCurrent Portfolio Status:\n");
+            Console.WriteLine("\n\nCurrent Portfolio \'" + this.Name + "\' Status:\n");
             foreach(Stock h in _stocks)
             {
                 String cur = String.Format("${0,-10}\t- ({0:C2})% {0} {0}", (h.Stocks * h.Price), (h.Stocks * 100 / _tStocks), h.Ticker, h.Company);
