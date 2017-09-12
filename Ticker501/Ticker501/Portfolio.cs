@@ -9,6 +9,7 @@ namespace Ticker501
     class Portfolio
     {
         private List<Stock> _stocks;
+        private int _tStocks;
         private string _name;
         private double _gains, _losses;
         private static double _feePerTrade = 9.99;
@@ -17,6 +18,7 @@ namespace Ticker501
         public Portfolio()
         {
             _stocks = new List<Stock>();
+            _tStocks = 0;
             _name = null;
             _gains = 0;
             _losses = 0;
@@ -25,9 +27,14 @@ namespace Ticker501
         public Portfolio(List<Stock> s, string name)
         {
             _stocks = s;
+            _tStocks = 0;
             _name = name;
             _gains = 0;
             _losses = 0;
+            foreach(Stock h in s)
+            {
+                _tStocks += h.Stocks;
+            }
         }
 
         public List<Stock> Stocks
@@ -105,9 +112,12 @@ namespace Ticker501
 
         public void portfolioPrintOut()
         {
+            Console.WriteLine("\n\nCurrent Portfolio Status:\n");
             foreach(Stock h in _stocks)
             {
-                Console.
+                String cur = String.Format("${0,-10}\t- ({0:C2})% {0} {0}", (h.Stocks * h.Price), (h.Stocks * 100 / _tStocks), h.Ticker, h.Company);
+                Console.WriteLine(cur);
+                cur = "";
             }
         }
     }
