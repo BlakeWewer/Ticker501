@@ -11,6 +11,8 @@ namespace Ticker501
         private List<Stock> _stocks;
         private string _name;
         private double _gains, _losses;
+        private static double _feePerTrade = 9.99;
+        private static double _feePerTransfer = 4.99;
 
         public Portfolio()
         {
@@ -76,6 +78,37 @@ namespace Ticker501
             }
         }
 
-        
+        public void buyStock(Stock s)
+        {
+            Stocks.Add(s);
+        }
+
+        public void sellStock(Stock s)
+        {
+            /*
+            Console.WriteLine("Please select which portfolio to sell stock from...");
+            if (_portfolios[0] != null)
+                Console.Write("Enter '0' for Portfolio " + _portfolios[0].Name + "\t");
+            if (_portfolios[1] != null)
+                Console.Write("Enter '1' for Portfolio " + _portfolios[1].Name + "\t");
+            if (_portfolios[2] != null)
+                Console.Write("Enter '2' for Portfolio " + _portfolios[2].Name + "\t");
+            Console.WriteLine();
+            
+            Console.Write("Enter Portfolio: ");
+            int portfolio = Convert.ToInt32(Console.ReadLine());
+            */
+            //************************************************************************************************************************************************************************
+            Console.WriteLine("You currently have " + s.Stocks + " " + s.Ticker + " stocks bought for " + s.Price + ".  \nHow many would you like to sell for ");
+            //************************************************************************************************************************************************************************
+        }
+
+        public void portfolioPrintOut()
+        {
+            foreach(Stock h in _stocks)
+            {
+                Console.
+            }
+        }
     }
 }

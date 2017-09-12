@@ -8,22 +8,22 @@ namespace Ticker501
 {
     class Stock
     {
-        private string _ticker, _company, _name;
+        private string _ticker, _company;
         private int _stocks;
         private double _price;
+        private static double _feePerTrade = 9.99;
+        private static double _feePerTransfer = 4.99;
 
         public Stock()
         {
-            _name = null;
             _ticker = null;
             _company = null;
             _stocks = 0;
             _price = 0;
         }
 
-        public Stock(string name, string ticker, string company, int stocks, double price)
+        public Stock(string ticker, string company, int stocks, double price)
         {
-            _name = name;
             _ticker = ticker;
             _company = company;
             _stocks = stocks;
@@ -53,19 +53,6 @@ namespace Ticker501
             set
             {
                 _company = value;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-
-            set
-            {
-                _name = value;
             }
         }
 

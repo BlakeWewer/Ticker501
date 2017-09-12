@@ -139,21 +139,44 @@ namespace Ticker501
 
         }
 
-        void addStock(Stock s)
+        void buyStock(Stock s)
         {
-            Console.WriteLine("Please select which portfolio to add this stock to...");
-            if (_portfolios[0] != null)
-                Console.Write("Enter '0' for Portfolio " + _portfolios[0].Name + "\t");
-            if (_portfolios[1] != null)
-                Console.Write("Enter '1' for Portfolio " + _portfolios[1].Name + "\t");
-            if (_portfolios[2] != null)
-                Console.Write("Enter '2' for Portfolio " + _portfolios[2].Name + "\t");
-            Console.WriteLine();
+            bool processed = false;
+            while(!processed)
+            {
+                int portfolio = -1, max = 0;
+                Console.WriteLine("Please select which portfolio to add this stock to...");
+                if (_portfolios[0] != null)
+                    Console.Write("Enter '0' for Portfolio " + _portfolios[0].Name + "\t");
+                max = 1;
+                if (_portfolios[1] != null)
+                    Console.Write("Enter '1' for Portfolio " + _portfolios[1].Name + "\t");
+                max = 2;
+                if (_portfolios[2] != null)
+                    Console.Write("Enter '2' for Portfolio " + _portfolios[2].Name + "\t");
+                max = 3;
+                Console.WriteLine();
 
-            Console.Write("Enter Portfolio: ");
-            int portfolio = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Enter Portfolio: ");
+                try
+                {
+                    portfolio = Convert.ToInt32(Console.ReadLine());
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Value must be a valid integer from the list above.");
+                }
 
-            _portfolios[portfolio].Stocks.Add(s);
+                if (portfolio > 0 && portfolio < max)
+                {
+                    _portfolios[portfolio].buyStock(s);
+                    processed = true;
+                }  
+                else
+                {
+                    throw new Exception("Integer must be within the valid range from above.");
+                }
+            }
         }
 
         void sellStock(Stock s)
@@ -187,6 +210,10 @@ namespace Ticker501
             if (amount > Balance)
             {
                 Console.WriteLine("Withdrawal amount is greater than cash value in available balance.  \nWhich stocks would you like to sell in order to fulfill the withdraw transaction?");
+                foreach(Portfolio h in _portfolios)
+                {
+
+                }
                 //*******************************************************
                 //*******************************************************
                 //*******************************************************
