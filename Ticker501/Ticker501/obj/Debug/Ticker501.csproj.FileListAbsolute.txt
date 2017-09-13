@@ -5,3 +5,6 @@ C:\Users\bewewer\Source\Repos\Ticker501\Ticker501\Ticker501\bin\Debug\Ticker501.
 C:\Users\bewewer\Source\Repos\Ticker501\Ticker501\Ticker501\bin\Debug\Ticker501.pdb
 C:\Users\bewewer\Source\Repos\Ticker501\Ticker501\Ticker501\obj\Debug\Ticker501.exe
 C:\Users\bewewer\Source\Repos\Ticker501\Ticker501\Ticker501\obj\Debug\Ticker501.pdb
+C:\Users\bewewer\Source\Repos\BlakeWewer-course-work\Ticker501\Ticker501\Ticker501\bin\Debug\Ticker501.exe.config
+C:\Users\bewewer\Source\Repos\BlakeWewer-course-work\Ticker501\Ticker501\Ticker501\obj\Debug\Ticker501.exe
+C:\Users\bewewer\Source\Repos\BlakeWewer-course-work\Ticker501\Ticker501\Ticker501\obj\Debug\Ticker501.pdb
