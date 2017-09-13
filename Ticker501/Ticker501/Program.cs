@@ -11,15 +11,13 @@ namespace Ticker501
     {
         public static List<Stock> db;
         public static Account account;
-        private static double _feePerTrade = 9.99;
-        private static double _feePerTransfer = 4.99;
         static void Main(string[] args)
         {
             db = new List<Stock>();
             account = new Account();
             StreamReader tick = new StreamReader("ticker.txt");
             string cur = tick.ReadLine();
-            while(cur != "")
+            while(cur != null)
             {
                 string[] split = cur.Split('-');
                 Stock s = new Stock(split[0], split[1], 0, Convert.ToDouble(split[2].Substring(1)));
@@ -44,7 +42,7 @@ namespace Ticker501
             string input = Console.ReadLine();
 
             int first = -1, second = -1;
-            if(input.Equals("L"))
+            if(input.ToUpper().Equals("L"))
             {
                 foreach(Stock h in db)
                 {
@@ -58,7 +56,7 @@ namespace Ticker501
                         h.Price = h.Price + (h.Price * second / 100);
                     }
                 }
-            }else if(input.Equals("M"))
+            }else if(input.ToUpper().Equals("M"))
             {
                 foreach (Stock h in db)
                 {
@@ -74,7 +72,7 @@ namespace Ticker501
                     }
                 }
             }
-            else if (input.Equals("H"))
+            else if (input.ToUpper().Equals("H"))
             {
                 foreach (Stock h in db)
                 {
@@ -144,7 +142,6 @@ namespace Ticker501
             Console.Clear();
             Console.WriteLine("1 - Add Funds");
             Console.WriteLine("2 - Withdraw Funds");
-            Console.Write("\nPlease select and option from the menu above: ");
             while (!(selection < 2 && selection > 0))
             {
                 Console.Write("\nSelect a menu option by typing in the corresponding number: ");
@@ -163,18 +160,21 @@ namespace Ticker501
                 bool complete = false;
                 while(!complete)
                 {
-                    Console.Write("Enter amount you would like to add (Do NOT include symbols or commas): ");
+                    Console.Write("\n\nEnter amount you would like to add (Do NOT include symbols or commas): ");
                     try
                     {
-                        account.addFunds(Convert.ToDouble(Console.ReadLine()));
+                        double add = Convert.ToDouble(Console.ReadLine());
+                        account.addFunds(add);
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("Please enter a valid number.\n");
+                        Console.WriteLine("\nPlease enter a valid number.\n");
                         continue;
                     }
                     complete = true;
                 }
+                Console.WriteLine("Press ENTER to return to the Main Menu.");
+                Console.ReadLine();
                 mainMenu();
             }else if (selection == 2)
             {
@@ -193,6 +193,8 @@ namespace Ticker501
                     }
                     complete = true;
                 }
+                Console.WriteLine("Press ENTER to return to the Main Menu.");
+                Console.ReadLine();
                 mainMenu();
             }
         }
@@ -219,9 +221,12 @@ namespace Ticker501
 
             if(selection == 1)
             {
+                Console.WriteLine("Balance: " + account.Balance);
+                Console.WriteLine("Stock Balance: " + account.Stocks);
                 foreach(Portfolio h in account.Portfolios)
                 {
-                    account.portfolioBalancePrintOut(h);
+                    if(h != null)
+                        account.portfolioBalancePrintOut(h);
                 }
             }else if(selection == 2)
             {
@@ -230,6 +235,8 @@ namespace Ticker501
                 //**************************************************************************************************************************************************************
                 //**************************************************************************************************************************************************************
             }
+            Console.WriteLine("Press ENTER to return to the Main Menu.");
+            Console.ReadLine();
             mainMenu();
         }
 
@@ -241,6 +248,8 @@ namespace Ticker501
             string name = Console.ReadLine();
             account.addPortfolio(new Portfolio(new List<Stock>(), name));
 
+            Console.WriteLine("Press ENTER to return to the Main Menu.");
+            Console.ReadLine();
             mainMenu();
         }
 
@@ -248,6 +257,8 @@ namespace Ticker501
         {
             Console.Clear();
             account.deletePortfolio();
+            Console.WriteLine("Press ENTER to return to the Main Menu.");
+            Console.ReadLine();
             mainMenu();
         }
 
@@ -274,6 +285,8 @@ namespace Ticker501
             //**************************************************************************************************************************************************************
             //**************************************************************************************************************************************************************
 
+            Console.WriteLine("Press ENTER to return to the Main Menu.");
+            Console.ReadLine();
             mainMenu();
         }
 
@@ -308,6 +321,8 @@ namespace Ticker501
                 string ticker = Console.ReadLine();
                 account.sellStock(ticker);
             }
+            Console.WriteLine("Press ENTER to return to the Main Menu.");
+            Console.ReadLine();
             mainMenu();
         }
 
@@ -315,6 +330,8 @@ namespace Ticker501
         {
             Console.Clear();
             updateStockPrices();
+            Console.WriteLine("Press ENTER to return to the Main Menu.");
+            Console.ReadLine();
             mainMenu();
         }
     }

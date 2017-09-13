@@ -48,7 +48,7 @@ namespace Ticker501
          */
         public Account(double balance)
         {
-            _portfolios = null;
+            _portfolios = new Portfolio[3];
             _balance = balance;
             _gains = 0;
             _losses = 0;
@@ -304,8 +304,8 @@ namespace Ticker501
 
         public void addFunds(double amount)
         {
-            Balance += (amount - _feePerTransfer);
-            Losses += _feePerTransfer;
+            _balance += (amount - _feePerTransfer);
+            _losses += _feePerTransfer;
         }
 
         public void withdrawFunds(double amount)

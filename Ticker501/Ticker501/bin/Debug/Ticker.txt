@@ -1,1 +1,25 @@
-MSFT-Microsoft Corporation-$259.90 AAPL-Apple Inc.-$203.20 GOOG-Google Inc.-$179.80 CSCO-Cisco Systems, Inc.-$150.40 ORCL-Oracle Corporation-$127.60 INTC-Intel Corporation-$122.80 VOD-Vodafone Group Plc (ADR)-$119.80 QCOM-QUALCOMM, Inc.-$65.40 AMZN-Amazon.com, Inc.-$58.40 AMGN-Amgen, Inc.-$56.20 TEVA-Teva Pharmaceutical Industries Ltd (ADR)-$55.30 CMCSA-Comcast Corporation-$49.90 GILD-Gilead Sciences, Inc.-$42.60 RIMM-Research In Motion Limited-$41.40 NWSA-News Corporation-$36.70 ERIC-Telefonaktiebolaget LM Ericsson (ADR)-$35.50 EBAY-eBay Inc.-$35.00 INFY-Infosys Technologies Limited (ADR)-$34.90 DTV-DIRECTV-$32.90 MITSY-Mitsui & Co., Ltd. (ADR)-$30.90 CELG-Celgene Corporation-$29.70 DELL-Dell Inc.-$28.50 ESRX-Express Scripts, Inc.-$27.30 LSTZA-Liberty Media Corp-$27.00 COST-Costco Wholesale Corporation-$26.90 
+MSFT-Microsoft Corporation-$294.4667
+AAPL-Apple Inc.-$221.996
+GOOG-Google Inc.-$149.98916
+CSCO-Cisco Systems, Inc.-$146.67008
+ORCL-Oracle Corporation-$112.63252
+INTC-Intel Corporation-$122.9228
+VOD-Vodafone Group Plc (ADR)-$148.86348
+QCOM-QUALCOMM, Inc.-$59.0562
+AMZN-Amazon.com, Inc.-$75.89664
+AMGN-Amgen, Inc.-$55.39072
+TEVA-Teva Pharmaceutical Industries Ltd (ADR)-$54.84654
+CMCSA-Comcast Corporation-$44.04673
+GILD-Gilead Sciences, Inc.-$34.46766
+RIMM-Research In Motion Limited-$46.1817
+NWSA-News Corporation-$27.77456
+ERIC-Telefonaktiebolaget LM Ericsson (ADR)-$27.477
+EBAY-eBay Inc.-$35.3535
+INFY-Infosys Technologies Limited (ADR)-$36.02727
+DTV-DIRECTV-$34.06795
+MITSY-Mitsui & Co., Ltd. (ADR)-$30.8691
+CELG-Celgene Corporation-$30.15144
+DELL-Dell Inc.-$28.3176
+ESRX-Express Scripts, Inc.-$25.3071
+LSTZA-Liberty Media Corp-$25.9335
+COST-Costco Wholesale Corporation-$28.15085
